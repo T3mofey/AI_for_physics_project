@@ -92,26 +92,6 @@ RBF-kernel bandwidths set by the median heuristic. Because the simulator exposes
 correlations can be read exactly from the probability vector in addition to being estimated from
 samples.
 
-## Setup
-
-Requires Python 3.10+.
-
-```bash
-git clone https://github.com/T3mofey/AI_for_physics_project.git
-cd AI_for_physics_project
-python -m venv .venv && source .venv/bin/activate   # optional
-pip install -r requirements.txt
-```
-
-## Running
-
-```bash
-jupyter notebook        # then open notebooks/00_combined.ipynb
-```
-
-All four phases run top-to-bottom in a single notebook. The multi-seed Born machine cell takes a
-few minutes on CPU. Random seeds are fixed, so results are reproducible; small differences from the
-table above can arise from the live `yfinance` download.
 
 ## Notes and limitations
 
