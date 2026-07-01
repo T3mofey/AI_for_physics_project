@@ -1,7 +1,6 @@
 # Generative modeling of correlated financial returns: from classical RBMs to a variational quantum Born machine
 
-Individual project for **AI Models for Physics (2025/26)**, Università degli Studi di Milano
-(Prof. Enrico Prati, Dr. Sebastiano Corli).
+Individual project for **AI Models for Physics (2025/26)**, Università degli Studi di Milano.
 
 ## Overview
 
