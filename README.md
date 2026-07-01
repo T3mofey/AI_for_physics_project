@@ -64,7 +64,7 @@ Figures produced by the notebook live in [`figures/`](figures/):
 ```
 .
 ├── notebooks/
-│   └── 00_combined.ipynb   # single self-contained notebook (all code inlined)
+│   └── RBM_Born.ipynb   # single self-contained notebook (all code inlined)
 ├── figures/
 └── requirements.txt
 ```
