@@ -105,14 +105,4 @@ samples.
   *parity* finding on a classical simulator, not a hardware result and not a claim of advantage.
 - The RBM validation is reported at *T*c, the most demanding temperature; agreement away from the
   critical point is tighter.
-- The MMD objective and the median-heuristic kernel follow the differentiable-Born-machine recipe
-  of Liu & Wang (2018).
 
-## References
-
-1. Hinton, *A Practical Guide to Training RBMs* (2010).
-2. Torlai & Melko, *Learning thermodynamics with Boltzmann machines*, PRB 94, 165134 (2016). arXiv:1606.02718
-3. Carrasquilla & Melko, *Machine learning phases of matter*, Nature Physics 13, 431 (2017). arXiv:1605.01735
-4. Liu & Wang, *Differentiable Learning of Quantum Circuit Born Machines*, PRA 98, 062324 (2018). arXiv:1804.04168
-5. Coyle et al., *The Born Supremacy: Quantum Advantage and Training of an Ising Born Machine* (2019). arXiv:1904.02214
-6. Amin et al., *Quantum Boltzmann Machine*, PRX 8, 021050 (2018). arXiv:1601.02036
