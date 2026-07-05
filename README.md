@@ -27,7 +27,8 @@ Restricted Boltzmann Machines and their training, and quantum machine learning f
 |------|-------|------|--------|--------|
 | 1 | RBM (CD-10, ±1 units) | reproduce 2D Ising thermodynamics at *T* ≈ *T*c | magnetization \|m\| | **0.686** (data 0.675) |
 | 1 | RBM | same | energy / spin | **−1.274** (data −1.434) |
-| 2 | RBM (CD-1, binary) | reproduce stock correlation matrix | correlation MAE | **0.0335** |
+| 2 | RBM (CD-1, single run, 500 samples) | reproduce stock correlation matrix | correlation MAE | **0.0335** |
+| 2 | RBM (CD-1, 5 seeds, 5000 samples) | same | correlation MAE | **0.021 ± 0.002** (best 0.019) |
 | 3 | Quantum Born machine | reproduce stock correlation matrix | correlation MAE (exact) | **0.0019 ± 0.0008** (5 seeds) |
 | 3 | Quantum Born machine | same | correlation MAE (5000 shots) | **0.0109 ± 0.0021** |
 
@@ -35,16 +36,19 @@ Restricted Boltzmann Machines and their training, and quantum machine learning f
 temperature, its generated configurations recover the magnetization almost exactly and the energy
 to within ~13% — the residual energy gap is expected, since *T*c is the hardest point for a finite
 RBM (critical correlations are long-range). With the implementation validated, Phase 2 applies the
-same RBM to binarized returns and reproduces the asset correlation matrix to a mean absolute error
-of 0.033.
+same RBM to binarized returns. A single run evaluated on 500 generated samples gives an MAE of
+0.033; the multi-seed protocol (5 independent trainings, each evaluated on 5000 generated samples —
+mirroring the Born machine's evaluation) gives **0.021 ± 0.002**, showing that part of the
+single-run number was finite-sample noise rather than model error.
 
 Phase 3 reports two MAEs for the Born machine because they answer different questions. The
 **exact** MAE is computed directly from the circuit's full probability vector (possible because
 this is a 6-qubit simulator) and reflects the model's true correlation error. The **sampled** MAE
 is estimated from 5000 measurement shots and is the fair, apples-to-apples comparison against the
 RBM, which can only be evaluated by sampling; it sits higher than the exact value purely because of
-finite-shot noise. On the like-for-like sampled comparison the Born machine (0.011) and the RBM
-(0.034) are in the same ballpark.
+finite-shot noise. On the like-for-like comparison — 5 seeds and 5000 samples for both models —
+the Born machine (0.011 ± 0.002) edges out the RBM (0.021 ± 0.002), but both land in the same
+ballpark.
 
 **Takeaway.** At this scale (6 assets / 6 qubits, classical simulation) a small variational quantum
 Born machine *matches* a classical RBM at reproducing the pairwise correlation structure of
@@ -54,7 +58,8 @@ qubits on a simulator no such claim would be warranted.
 Figures produced by the notebook live in [`figures/`](figures/):
 
 - `ising_thermodynamics.png` — magnetization and energy vs temperature (Ising validation).
-- `correlation_comparison.png` — real vs RBM-generated correlation matrices.
+- `correlation_comparison.png` — real vs RBM-generated correlation matrices (single run).
+- `correlation_comparison_best_seed.png` — real vs RBM-generated correlation matrices (best of 5 seeds).
 - `born_machine_loss.png` — Born machine MMD² training curve.
 - `quantum_correlation.png` — real vs Born-machine correlation matrices.
 
@@ -77,7 +82,9 @@ and computes magnetization and energy-per-spin observables.
 **RBM.** Energy *E*(v, h) = −aᵀv − bᵀh − vᵀW h, with conditional distributions
 *p*(hⱼ=1|v) = σ(bⱼ + Wⱼᵀv) and *p*(vᵢ=1|h) = σ(aᵢ + Wᵢh). Trained by Contrastive Divergence: a
 *k*-step block-Gibbs chain produces the negative-phase statistics. Supports ±1 (Ising) and {0,1}
-(binary) units.
+(binary) units. On the financial task the RBM is additionally evaluated with the same multi-seed
+protocol as the Born machine: 5 independent trainings (seeded init, shuffling, and sampling), each
+generating 5000 samples via a 500-step Gibbs chain, reported as mean ± std.
 
 **Financial data.** Adjusted close prices for AAPL, MSFT, GOOGL, AMZN, META, NVDA
 (2018-01-01 to 2024-01-01) via `yfinance`; daily log-returns binarized to ±1 by sign (1508 trading
