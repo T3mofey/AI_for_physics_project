@@ -11,7 +11,7 @@ compared on the same metric:
 1. a **Restricted Boltzmann Machine (RBM)** implemented from scratch in PyTorch and trained with
    Contrastive Divergence, first **validated on the 2D Ising model** so we know the implementation
    reproduces known physics before we trust it on finance; and
-2. a small **variational quantum circuit trained as a Born machine** (PennyLane), used as a
+2. a small **variational quantum circuit trained as a Born machine** (PennyLane and trained with PyTorch optimizer), used as a
    quantum-generative baseline on the identical task.
 
 Each day's vector of asset signs is treated as a spin configuration, making the financial problem
